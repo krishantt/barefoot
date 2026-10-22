@@ -1,0 +1,10 @@
+.DS_Store
+build/
+build-sim/
+*.xcodeproj
+xcuserdata/
+*.ipa
+*.dSYM.zip
+DerivedData/
+Barefoot/Info.plist
+Barefoot/Barefoot.entitlements
