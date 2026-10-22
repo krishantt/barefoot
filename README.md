@@ -4,6 +4,8 @@
 
 [github.com/krishantt/barefoot](https://github.com/krishantt/barefoot) · [privacy](https://krishantt.github.io/barefoot/privacy.html) · [support](https://krishantt.github.io/barefoot/support.html)
 
+<img src="docs/screenshot.png" width="280" align="right" alt="Barefoot showing a weight reading and 14-day trend">
+
 One screen, no account, no ads: listens for the scale, shows the weight, and saves
 the settled reading to Apple Health. The OKOK app becomes unnecessary.
 
@@ -74,7 +76,11 @@ Open the app, step on the scale barefoot, wait for the green checkmark. History
 lives in Health → Browse → Body Measurements → Weight.
 
 The scale only advertises while it is measuring, so "no data yet" with the app
-open is normal until you stand on it.
+open is normal until you stand on it. The screen stays awake until a reading
+lands, so it cannot lock mid-weigh-in.
+
+Long-press the version label at the bottom to reveal the raw Bluetooth frame —
+that is the hex to send if your scale's format is not recognised.
 
 `xcrun simctl launch booted dev.krishtimil.Barefoot -demo` starts the app with a
 sample reading and trend, for screenshots or a quick UI check.

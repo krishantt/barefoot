@@ -1,0 +1,25 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  test:
+    runs-on: macos-15
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Parser tests
+        run: |
+          swiftc Barefoot/OkokPacket.swift Tests/main.swift -o /tmp/dt
+          /tmp/dt
+
+      - name: Build for iOS (unsigned)
+        run: |
+          brew install xcodegen
+          xcodegen generate
+          xcodebuild -project Barefoot.xcodeproj -scheme Barefoot \
+            -destination 'generic/platform=iOS' \
+            -derivedDataPath build CODE_SIGNING_ALLOWED=NO build

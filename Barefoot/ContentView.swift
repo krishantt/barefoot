@@ -7,8 +7,9 @@ struct ContentView: View {
     @ScaledMetric(relativeTo: .largeTitle) private var weightSize: CGFloat = 96
     @Environment(\.openURL) private var openURL
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @State private var showFrame = false
 
-    private var usesPounds: Bool { Locale.current.measurementSystem == .us }
+    private var usesPounds: Bool { health.usesPounds }
     private var unitName: String { usesPounds ? "lb" : "kg" }
 
     private func display(_ kg: Double) -> String {
@@ -67,11 +68,15 @@ struct ContentView: View {
                     Text(scale.status)
                         .font(.callout)
                         .foregroundStyle(.white.opacity(0.75))
-                    Text(scale.lastPacket.isEmpty ? "no data yet" : scale.lastPacket)
+                    // The raw Bluetooth frame is diagnostic, so it stays behind a
+                    // long press rather than facing every user.
+                    Text(showFrame ? (scale.lastPacket.isEmpty ? "no data yet" : scale.lastPacket)
+                                   : "Barefoot \(version)")
                         .font(.caption2.monospaced())
                         .foregroundStyle(.white.opacity(0.4))
                         .lineLimit(1)
-                        .accessibilityLabel("Last Bluetooth frame")
+                        .onLongPressGesture { withAnimation(.snappy) { showFrame.toggle() } }
+                        .accessibilityLabel(showFrame ? "Last Bluetooth frame" : "Version \(version)")
                 }
 
                 controls
@@ -80,6 +85,16 @@ struct ContentView: View {
             .padding(.bottom, 24)
         }
         .preferredColorScheme(.dark)
+        // keep the screen awake until the reading lands, so locking the phone
+        // mid-weigh-in cannot kill the scan
+        .onChange(of: scale.savedAt, initial: true) { _, saved in
+            UIApplication.shared.isIdleTimerDisabled = saved == nil
+        }
+        .onDisappear { UIApplication.shared.isIdleTimerDisabled = false }
+    }
+
+    private var version: String {
+        Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "1.0"
     }
 
     private func trendCard(delta: Double) -> some View {

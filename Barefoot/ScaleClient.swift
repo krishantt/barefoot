@@ -23,6 +23,7 @@ final class ScaleClient: NSObject, ObservableObject {
     func rescan() {
         weightKg = nil
         lastPacket = ""
+        savedAt = nil
         central.stopScan()
         start()
     }
