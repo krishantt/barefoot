@@ -28,8 +28,9 @@ before you pay Apple.
 3. **Create the app record** in App Store Connect: name, subtitle, category
    (Health & Fitness), price, availability.
 4. **Host the privacy policy and support page.** Both are required URLs.
-   `docs/privacy.md` and `docs/support.md` are ready — push the repo and enable
-   GitHub Pages, or paste them into any static host.
+   Already live from this repo:
+   - Privacy: https://krishantt.github.io/barefoot/privacy.html
+   - Support: https://krishantt.github.io/barefoot/support.html
 5. **Screenshots.** 6.9-inch is mandatory. You do not need the scale: the Demo
    button produces a reading, so shoot them in the simulator.
 6. **App Privacy answers:** *Data Not Collected.* Accurate — nothing leaves the

@@ -1,5 +1,9 @@
 # Barefoot
 
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+
+[github.com/krishantt/barefoot](https://github.com/krishantt/barefoot) · [privacy](https://krishantt.github.io/barefoot/privacy.html) · [support](https://krishantt.github.io/barefoot/support.html)
+
 One screen, no account, no ads: listens for the scale, shows the weight, and saves
 the settled reading to Apple Health. The OKOK app becomes unnecessary.
 
