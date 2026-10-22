@@ -10,7 +10,7 @@ before you pay Apple.
 | Icon (1024, opaque, no alpha) | `Barefoot/Assets.xcassets/AppIcon.appiconset`, regenerate with `swift scripts/make_icon.swift` |
 | Accent colour | `Assets.xcassets/AccentColor.colorset` |
 | Privacy manifest, zero data collected | `Barefoot/PrivacyInfo.xcprivacy` |
-| HealthKit: write-only Body Mass | `HealthStore.swift`, entitlement in `project.yml` |
+| HealthKit: write Body Mass, read recent history for the trend | `HealthStore.swift`, entitlement in `project.yml` |
 | Export-compliance flag (`ITSAppUsesNonExemptEncryption`) | `project.yml` |
 | Category: Health & Fitness | `project.yml` |
 | Dynamic Type, VoiceOver labels, kg/lb by locale | `ContentView.swift` |
@@ -89,9 +89,10 @@ Then attach the build in App Store Connect, paste the review notes below, submit
 > **No hardware needed to evaluate:** tap **Demo** on the main screen to see the
 > reading state. Saving to Health requires a physical scale.
 >
-> HealthKit is used for **write-only** access to Body Mass. The app never reads
-> Health data, stores nothing, has no accounts, no analytics, and makes no network
-> requests.
+> HealthKit is used to **write** body mass samples and to **read back your own
+> recent weight history** solely to draw the trend line on the main screen. No
+> Health data is stored by the app, transmitted, or shared. No accounts, no
+> analytics, no network requests.
 
 ## Honest risk assessment
 

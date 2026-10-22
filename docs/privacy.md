@@ -10,8 +10,10 @@
   or third-party SDKs.
 - **No network access.** The app makes no network requests at all.
 - **Bluetooth** is used only to receive weight frames from a nearby scale.
-- **Health data** is written to Apple Health with your permission and is not read
-  back, stored elsewhere, or shared. It is governed by your iOS settings at
+- **Health data** is written to Apple Health with your permission. The app also
+  reads your recent weight history from Apple Health for one purpose: drawing the
+  trend and delta on the main screen. That history is not copied off the device,
+  not stored by the app, and not shared. It is governed by your iOS settings at
   any time under Settings → Health → Data Access & Devices → Barefoot.
 
 Removing the app deletes everything it stored, because it stores nothing beyond

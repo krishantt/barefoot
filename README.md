@@ -23,11 +23,29 @@ Four frame layouts are handled, keyed by the manufacturer id in the advertisemen
 | VF0 | `0xF0FF` | 4 bytes, plain weight |
 | C0 | low byte `0xC0` | 13 bytes, stable flag + unit/resolution in byte 6 |
 
-Impedance is ignored — Apple Health takes weight, and body-fat formulas need your
-age/height/sex to be even approximately right.
+### Why no body-fat / muscle / water numbers
+
+These scales measure weight plus **impedance**, so the vendor app derives body
+composition from it: `impedance + height → total body water → fat-free mass →
+body fat %`, then BMR and metabolic age off that.
+
+This app does not do that, on purpose:
+
+- It needs **height, age and sex**, which the app does not collect.
+- Foot-to-foot scales are calibrated with **private per-device regressions**. The
+  published equations (Kyle et al.) are for wrist-to-ankle measurement and read
+  wrong here, so the numbers would not match the manufacturer's app.
+- Typical error is ±3–5 percentage points even when done properly.
+- Apple's HealthKit rules do not look kindly on writing estimated health data.
+
+A confidently displayed "27.4% body fat" that is off by five points is worse than
+no number. Weight is what the scale actually measures.
 
 Only the settled frame is written (V20 and C0 carry a stable flag), and the same
 weigh-in is not saved twice within 20 seconds.
+
+The trend line is drawn from your last 14 days of weight in Apple Health — real
+readings, not estimates. Impedance is deliberately ignored: see below.
 
 ## Build it
 

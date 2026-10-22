@@ -19,6 +19,7 @@ targets:
         CFBundleDisplayName: Barefoot
         NSBluetoothAlwaysUsageDescription: Connects to your scale to read the weight.
         NSHealthUpdateUsageDescription: Saves your weigh-ins to Apple Health.
+        NSHealthShareUsageDescription: Reads your recent weight history to draw the trend.
         ITSAppUsesNonExemptEncryption: false
         LSApplicationCategoryType: public.app-category.healthcare-fitness
         UILaunchScreen: {}
