@@ -91,6 +91,17 @@ that is the hex to send if your scale's format is not recognised.
 `xcrun simctl launch booted dev.krishtimil.Barefoot -demo` starts the app with a
 sample reading and trend, for screenshots or a quick UI check.
 
+## Re-signing (free account)
+
+A free Apple ID signature lasts 7 days. One command rebuilds and reinstalls:
+
+```bash
+./scripts/resign.sh          # or alias resign=... in ~/.zshrc
+```
+
+It finds the connected iPhone itself, prints the new expiry date, and launches
+the app.
+
 ## Distribution
 
 - App Store: see `APPSTORE.md`

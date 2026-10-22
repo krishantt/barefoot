@@ -85,6 +85,30 @@ plutil -extract CFBundleIdentifier raw build/Build/Products/Release-iphoneos/Bar
 The bundle identifier, version and build number in the source must match the IPA
 exactly (case sensitive), and `marketplaceID` must match App Store Connect.
 
+## Free options compared
+
+| Option | Cost | Expires | Needs a computer | Health sync |
+|---|---|---|---|---|
+| Free signing + `scripts/resign.sh` (this repo) | $0 | 7 days | only to re-sign, once a week | yes |
+| SideStore | $0 | 7 days | once, for a pairing file; then on-device over WireGuard | yes |
+| AltStore Classic | $0 | 7 days | yes, AltServer, every 7 days | yes |
+| TestFlight / App Store | $99/yr | never | no | yes |
+| Mac or Raspberry Pi listener | $0 | never | no | no — CSV only |
+
+There is no free option that avoids the 7-day expiry. Apple ties it to the free
+provisioning profile itself; every "free sideloading" tool is the same mechanism
+with a different wrapper.
+
+`scripts/resign.sh` (alias it as `resign`) is the lowest-friction version of that
+loop: it rebuilds, reinstalls, prints the new expiry date, and opens the app.
+
+```bash
+echo 'alias resign="$HOME/dev/personal/scaleweight/scripts/resign.sh"' >> ~/.zshrc
+```
+
+The signature date comes from the app's embedded profile, so you always know when
+the next run is due.
+
 ## The honest recommendation
 
 If the goal is **your own phone without the 7-day expiry**, PAL cannot help you
