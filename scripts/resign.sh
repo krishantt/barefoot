@@ -61,13 +61,21 @@ install() {
 echo "Building…"
 build
 
-if ! install | grep -q "App installed"; then
-  # an expired profile can leave the incremental build signed with stale data
-  echo "Install failed — rebuilding from clean…"
-  xcodebuild -project Barefoot.xcodeproj -scheme Barefoot \
-    -destination 'generic/platform=iOS' -derivedDataPath build \
-    -allowProvisioningUpdates clean build > /tmp/barefoot-build.log 2>&1
-  install | tail -3
+out=$(install || true)
+if ! grep -q "App installed" <<<"$out"; then
+  if grep -qiE "signature|profile|trusted|entitlement" <<<"$out"; then
+    # stale signature: only a clean rebuild re-embeds the fresh profile
+    echo "Signature problem — rebuilding from clean…"
+    xcodebuild -project Barefoot.xcodeproj -scheme Barefoot \
+      -destination 'generic/platform=iOS' -derivedDataPath build \
+      -allowProvisioningUpdates clean build > /tmp/barefoot-build.log 2>&1
+    install | tail -3
+  else
+    # usually the device being busy or locked; a retry is enough
+    echo "Install failed, retrying…"
+    sleep 3
+    install | tail -3
+  fi
 fi
 
 if [ -f "$APP/embedded.mobileprovision" ]; then
