@@ -10,7 +10,6 @@ struct BarefootApp: App {
         WindowGroup {
             ContentView(scale: scale, health: health)
                 .task {
-                    try? await health.authorize()
                     scale.onStableWeight = { kg, date in
                         Task {
                             do {
@@ -21,6 +20,15 @@ struct BarefootApp: App {
                                 await MainActor.run { scale.status = "Health save failed" }
                             }
                         }
+                    }
+
+                    // -demo: App Store screenshots and UI checks without a scale
+                    // or a Health permission prompt.
+                    if ProcessInfo.processInfo.arguments.contains("-demo") {
+                        scale.demo()
+                        health.seedDemoHistory()
+                    } else {
+                        try? await health.authorize()
                     }
                 }
         }

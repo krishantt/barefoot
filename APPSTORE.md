@@ -15,7 +15,7 @@ before you pay Apple.
 | Category: Health & Fitness | `project.yml` |
 | Dynamic Type, VoiceOver labels, kg/lb by locale | `ContentView.swift` |
 | Denied-permission escape hatch | "Open Settings" button |
-| Demo mode (no hardware needed) | "Demo" button |
+| Demo mode (no hardware needed) | "Demo" button, and `-demo` launch argument for scripted screenshots |
 | Version 1.0 / build 1 | `project.yml` |
 
 ## Blockers only you can clear
@@ -47,8 +47,9 @@ xcodebuild -project Barefoot.xcodeproj -scheme Barefoot \
 
 xcrun simctl boot "iPhone 17 Pro Max"
 xcrun simctl install booted build-sim/Build/Products/Debug-iphonesimulator/ScaleWeight.app
-xcrun simctl launch booted dev.krishtimil.Barefoot
-xcrun simctl io booted screenshot shot-1.png   # then tap Demo, shoot again
+# -demo skips the Health permission prompt and shows a sample reading + trend
+xcrun simctl launch booted dev.krishtimil.Barefoot -demo
+xcrun simctl io booted screenshot shot-1.png
 ```
 
 ## Archive and upload

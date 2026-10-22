@@ -76,6 +76,9 @@ lives in Health → Browse → Body Measurements → Weight.
 The scale only advertises while it is measuring, so "no data yet" with the app
 open is normal until you stand on it.
 
+`xcrun simctl launch booted dev.krishtimil.Barefoot -demo` starts the app with a
+sample reading and trend, for screenshots or a quick UI check.
+
 ## Contributing
 
 The protocol surface is one file. `Barefoot/OkokPacket.swift` has no Bluetooth or

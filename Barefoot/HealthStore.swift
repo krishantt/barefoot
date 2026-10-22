@@ -32,6 +32,16 @@ final class HealthStore: ObservableObject {
         history = samples.map { ($0.endDate, $0.quantity.doubleValue(for: .gramUnit(with: .kilo))) }
     }
 
+    /// Screenshot/demo only: in-memory points for the trend card. Nothing is
+    /// written to Health.
+    func seedDemoHistory() {
+        let now = Date()
+        history = (0..<14).reversed().compactMap { offset in
+            guard let day = Calendar.current.date(byAdding: .day, value: -offset, to: now) else { return nil }
+            return (day, 68.4 + Double(offset) * 0.12)
+        }
+    }
+
     func save(kg: Double, at date: Date) async throws {
         let sample = HKQuantitySample(
             type: mass,

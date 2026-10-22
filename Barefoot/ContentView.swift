@@ -26,8 +26,8 @@ struct ContentView: View {
 
     var body: some View {
         ZStack {
-            LinearGradient(colors: [Color(red: 0.16, green: 0.71, blue: 0.68),
-                                    Color(red: 0.07, green: 0.29, blue: 0.50)],
+            LinearGradient(colors: [Color(red: 0.09, green: 0.47, blue: 0.45),
+                                    Color(red: 0.04, green: 0.19, blue: 0.34)],
                            startPoint: .top, endPoint: .bottom)
                 .ignoresSafeArea()
 
@@ -47,7 +47,7 @@ struct ContentView: View {
 
                     Text(unitName)
                         .font(.title3)
-                        .foregroundStyle(.white.opacity(0.6))
+                        .foregroundStyle(.white.opacity(0.7))
                         .accessibilityHidden(true)
                 }
 
@@ -100,6 +100,10 @@ struct ContentView: View {
         }
         .padding(18)
         .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 24, style: .continuous))
+        .overlay {
+            RoundedRectangle(cornerRadius: 24, style: .continuous)
+                .stroke(.white.opacity(0.12), lineWidth: 1)
+        }
     }
 
     private func deltaString(_ kg: Double) -> String {
@@ -136,22 +140,35 @@ private struct Sparkline: View {
 
     var body: some View {
         GeometryReader { geo in
-            let lo = values.min() ?? 0
-            let hi = values.max() ?? 1
-            let span = max(hi - lo, 0.4)
-            Path { path in
-                for (index, value) in values.enumerated() {
-                    let x = geo.size.width * CGFloat(index) / CGFloat(max(values.count - 1, 1))
-                    let y = geo.size.height * (1 - CGFloat((value - lo) / span))
-                    if index == 0 {
-                        path.move(to: CGPoint(x: x, y: y))
-                    } else {
-                        path.addLine(to: CGPoint(x: x, y: y))
+            let points = normalized(in: geo.size)
+            ZStack(alignment: .topLeading) {
+                Path { path in
+                    for (index, point) in points.enumerated() {
+                        index == 0 ? path.move(to: point) : path.addLine(to: point)
                     }
                 }
+                .stroke(.white.opacity(0.9),
+                        style: StrokeStyle(lineWidth: 3, lineCap: .round, lineJoin: .round))
+
+                if let last = points.last {
+                    Circle()
+                        .fill(.white)
+                        .frame(width: 8, height: 8)
+                        .position(last)
+                }
             }
-            .stroke(.white.opacity(0.9),
-                    style: StrokeStyle(lineWidth: 3, lineCap: .round, lineJoin: .round))
+        }
+    }
+
+    private func normalized(in size: CGSize) -> [CGPoint] {
+        let lo = values.min() ?? 0
+        let hi = values.max() ?? 1
+        let span = max(hi - lo, 0.4)
+        return values.enumerated().map { index, value in
+            CGPoint(
+                x: size.width * CGFloat(index) / CGFloat(max(values.count - 1, 1)),
+                y: size.height * (1 - CGFloat((value - lo) / span))
+            )
         }
     }
 }
