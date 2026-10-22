@@ -91,6 +91,15 @@ that is the hex to send if your scale's format is not recognised.
 `xcrun simctl launch booted dev.krishtimil.Barefoot -demo` starts the app with a
 sample reading and trend, for screenshots or a quick UI check.
 
+## Distribution
+
+- App Store: see `APPSTORE.md`
+- AltStore PAL (EU / Japan / Brazil only): see `DISTRIBUTE.md`
+
+`scripts/make_altstore_source.py` generates the AltStore source JSON from a real
+build, including the entitlements and privacy strings AltStore validates against
+the IPA.
+
 ## Contributing
 
 The protocol surface is one file. `Barefoot/OkokPacket.swift` has no Bluetooth or
