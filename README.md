@@ -4,10 +4,16 @@
 
 [github.com/krishantt/barefoot](https://github.com/krishantt/barefoot) · [privacy](https://krishantt.github.io/barefoot/privacy.html) · [support](https://krishantt.github.io/barefoot/support.html)
 
-<img src="docs/screenshot.png" width="280" align="right" alt="Barefoot showing a weight reading and 14-day trend">
-
 One screen, no account, no ads: listens for the scale, shows the weight, and saves
 the settled reading to Apple Health. The OKOK app becomes unnecessary.
+
+## Screenshots
+
+| Reading + 14-day trend | Saved to Health |
+|:---:|:---:|
+| <img src="docs/screenshots/reading.png" width="260"> | <img src="docs/screenshots/saved.png" width="260"> |
+
+Generated from the app itself with `-demo`, so they cannot drift from the code.
 
 ## How your scale actually talks
 

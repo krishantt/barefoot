@@ -40,7 +40,7 @@ struct ContentView: View {
                         .font(.system(size: weightSize, weight: .thin, design: .rounded))
                         .monospacedDigit()
                         .minimumScaleFactor(0.5)
-                        .foregroundStyle(.white)
+                        .foregroundStyle(.white.opacity(scale.weightKg == nil ? 0.35 : 1))
                         .contentTransition(.numericText())
                         .animation(reduceMotion ? nil : .snappy, value: scale.weightKg)
                         .accessibilityLabel("Weight")
